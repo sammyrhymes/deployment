@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Failed</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('../../../static/assets/img/failure.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+        }
+        .error-container {
+            text-align: center;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .error-icon {
+            font-size: 50px;
+            color: #dc3545;
+        }
+        .error-message {
+            font-size: 24px;
+            margin-top: 10px;
+            color: #333333;
+        }
+        .error-description {
+            margin-top: 10px;
+            color: #666666;
+        }
+        .btn-container {
+            margin-top: 20px;
+        }
+        .btn-container .btn {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon">
+            <i class="fas fa-exclamation-circle"></i>
+        </div>
+        <div class="error-message">
+            Payment Failed
+        </div>
+        <div class="error-description">
+            We’re sorry, but your payment could not be processed at this time. Please try again or contact support for assistance.
+        </div>
+        <div class="btn-container">
+            <a href="{% url 'check_out' %}" class="btn btn-danger btn-lg">Retry Payment</a>
+            <a href="#" class="btn btn-secondary btn-lg">Contact Support</a>
+            <a href="{% url 'check_out' %}" class="btn btn-primary btn-lg">Go Back</a>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>
