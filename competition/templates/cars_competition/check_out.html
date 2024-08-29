@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pay Here</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'assets/css/styles.css' %}"> -->
+    <style>
+        /* styles.css */
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('../../../static/assets/img/success.jpg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .payment-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .payment-container h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            overflow-y: auto; /* Enable horizontal scrolling */
+            white-space: nowrap; /* Ensure content stays in one line */
+        }
+
+        .billing-info {
+            margin-bottom: 20px;
+        }
+
+        .billing-info label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .billing-info input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .payment-method {
+            margin-bottom: 20px;
+        }
+
+        .payment-method label {
+            margin-right: 10px;
+        }
+
+        .payment-details {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .payment-details h3 {
+            margin-bottom: 10px;
+        }
+
+        .payment-details label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .payment-details input {
+            width: calc(100% - 20px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Checkout</h2>
+        <form id="payment-form" method="post" action="{% url 'stk' %}">
+            {% csrf_token %}
+            <div class="billing-info">
+                <h3>Billing Information</h3>
+                <div class="container">
+                    <div class="row">
+                        <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name" required placeholder="Enter your first name"><br>
+    
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name" required placeholder="Enter your last name"><br>
+
+
+                    </div>
+                    
+
+                    
+    
+
+                </div>
+               
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required placeholder="Enter your email"><br>
+
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number"><br>
+
+                <label for="address">Address:</label>
+                <input type="text" id="address" name="address" required placeholder="Enter your address"><br>
+
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" required placeholder="Enter your city"><br>
+
+                <label for="postal-code">Postal Code:</label>
+                <input type="text" id="postal-code" name="postal-code" required placeholder="Enter your postal code"><br>
+
+                <label for="po-box">PO Box:</label>
+                <input type="text" id="po-box" name="po-box" required placeholder="Enter your PO Box"><br>
+
+                <!-- Add other fields as necessary -->
+            </div>
+
+            <div class="payment-method">
+                <label>
+                    <input type="radio" name="payment-method" value="mpesa" checked> Mpesa
+                </label>
+                <label>
+                    <input type="radio" name="payment-method" value="stripe"> Credit/Debit Card (Stripe)
+                </label>
+            </div>
+
+            <div id="mpesa-form" class="payment-details">
+                <h3>Mpesa Payment</h3>
+                <label for="amount">Amount:</label>
+                <p>{{ Amount }}</p><br>
+
+                <button type="submit" class="btn btn-success">Pay with Mpesa</button>
+            </div>
+
+            <div id="stripe-form" class="payment-details" style="display: none;">
+                <h3>Credit/Debit Card Payment</h3><br>
+                <label for="card-element">Credit/Debit Card:</label><br><br>
+                <div id="card-element"></div><br><br>
+                <button type="button" id="stripe-pay-btn">Pay with Stripe</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const paymentMethodInputs = document.querySelectorAll('input[name="payment-method"]');
+            const mpesaForm = document.getElementById('mpesa-form');
+            const stripeForm = document.getElementById('stripe-form');
+            
+            paymentMethodInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    if (this.value === 'mpesa') {
+                        mpesaForm.style.display = 'block';
+                        stripeForm.style.display = 'none';
+                    } else {
+                        mpesaForm.style.display = 'none';
+                        stripeForm.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
